@@ -1,5 +1,5 @@
 
-service: aws-custom-authorizer-auth0
+service: aws-custom-authorizer
 
 plugins:
   - serverless-offline
@@ -9,8 +9,8 @@ provider:
   runtime: nodejs6.10
   region: us-west-2
   environment:
-    AUTH0_CLIENT_ID: ${file(./secrets.json):AUTH0_CLIENT_ID}
-    AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key)}
+    PUBLIC_KEY: ${file(./jwtRS256.key.pub)}
+    PRIVATE_KEY: ${file(./jwtRS256.key)}
 
 functions:
   auth:
@@ -21,6 +21,13 @@ functions:
     events:
       - http:
           path: api/public
+          method: post
+          cors: true
+  loginEndpoint:
+    handler: handler.login
+    events:
+      - http:
+          path: api/login
           method: post
           cors: true
   privateEndpoint:
