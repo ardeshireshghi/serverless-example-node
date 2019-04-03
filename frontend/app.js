@@ -2,9 +2,10 @@
 
 (() => {
   // Change this based on local
-  const baseApiUrl = 'https://vy741bnyz9.execute-api.us-west-2.amazonaws.com/dev';
+  const baseApiUrl = 'https://xab63iemrc.execute-api.eu-west-1.amazonaws.com/dev';
   const PUBLIC_ENDPOINT = `${baseApiUrl}/api/public`;
   const PRIVATE_ENDPOINT = `${baseApiUrl}/api/private`;
+  const LOGIN_ENDPOINT = `${baseApiUrl}/api/login`;
 
   const formSection = document.querySelector('.js-form-section');
   const loginForm = document.forms.login;
@@ -56,7 +57,7 @@
       e.preventDefault();
       const { email, password } = e.target.elements;
 
-      fetch(e.target.action, {
+      fetch(LOGIN_ENDPOINT, {
         cache: 'no-store',
         method: 'POST',
         headers: {

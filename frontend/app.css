@@ -103,19 +103,23 @@ input {
     height: 100%;
 
     align-items: center;
-    transform: translateY(10%);
     transition: transform 0.3s ease-out;
-    will-change: transform,opacity;
+    will-change: opacity;
     pointer-events: none;
     opacity: 0;
 }
 
 .form-section--shown {
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    transform: translateY(0);
-    background-color: rgba(255,255,255,0.85);
+    transition: opacity 0.25s ease;
+    background-color: rgba(57, 87, 119, 0.8);
     pointer-events: visible;
     opacity: 1;
+}
+
+.form-section--shown .login-form {
+   transform: translateY(0);
+   opacity: 1;
+   transition: all 0.3s ease 0.2s;
 }
 
 .login-form {
@@ -125,9 +129,12 @@ input {
   padding: 5rem 4rem 4rem 4rem;
   background-color: #efefef;
   border-radius: 10px;
-  box-shadow: 0 1px 2px rgba(0,0,0, 0.2);
+  box-shadow: 0 1px 2px rgba(0,0,0, 0.3);
   flex: 1;
-  border: 1px solid rgb(238, 238, 238);
+  opacity: 0;
+  transform: translateY(100px);
+
+  border: 1px solid rgb(208, 208, 208);
 }
 
 .login-form-submit {
@@ -143,3 +150,4 @@ input {
   color: red;
   margin-top: 1rem;
 }
+
