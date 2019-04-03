@@ -30,10 +30,14 @@
           View the source on github
         </a>
     </div>
+
+  </div>
+  <div class="form-section js-form-section">
     <form name="login" class="login-form" method="POST" action="http://localhost:3000/api/login">
       <input type="email" name="email" placeholder="Enter your email"/>
       <input type="password" name="password" placeholder="Enter your password"/>
       <button class="btn login-form-submit" type="submit">Sign In</button>
+      <div id="login-form__alert" class="js-login-form__alert login-form__alert"></div>
     </form>
   </div>
   <script src="app.js"></script>

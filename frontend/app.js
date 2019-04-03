@@ -2,9 +2,13 @@
 
 (() => {
   // Change this based on local
-  const baseApiUrl = 'http://localhost:3000';
+  const baseApiUrl = 'https://vy741bnyz9.execute-api.us-west-2.amazonaws.com/dev';
   const PUBLIC_ENDPOINT = `${baseApiUrl}/api/public`;
   const PRIVATE_ENDPOINT = `${baseApiUrl}/api/private`;
+
+  const formSection = document.querySelector('.js-form-section');
+  const loginForm = document.forms.login;
+  const formAlert = document.querySelector('.js-login-form__alert');
 
   const updateUI = () => {
     const isLoggedIn = localStorage.getItem('id_token');
@@ -34,47 +38,46 @@
   };
 
   const handleLoginRequestResponse = (data) => {
-    const loginForm = document.forms.login;
-
     if (data.error) {
-      document.getElementById('message').textContent = data.message;
+      formAlert.textContent = data.message;
     } else {
-      loginForm.classList.remove('login-form--shown');
+      formSection.classList.toggle('form-section--shown');
       loginForm.reset();
+      formAlert.textContent = '';
+
       loginUser(data.accessToken);
       updateUI();
     }
   };
 
+
   const listenToEvents = () => {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const { email, password } = e.target.elements;
+
+      fetch(e.target.action, {
+        cache: 'no-store',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value
+        })
+      })
+      .then(response => response.json())
+      .then(handleLoginRequestResponse)
+      .catch((e) => {
+        console.log('error', e);
+      });
+    });
+
     // Show login form
     document.getElementById('btn-login').addEventListener('click', () => {
-      const loginForm = document.forms.login;
-      loginForm.classList.add('login-form--shown');
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const { email, password } = e.target.elements;
-
-        fetch(e.target.action, {
-          cache: 'no-store',
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email.value,
-            password: password.value
-          })
-        })
-        .then(response => response.json())
-        .then(handleLoginRequestResponse)
-        .catch((e) => {
-          console.log('error', e);
-        });
-      }, {
-        once: true
-      });
+      formSection.classList.toggle('form-section--shown');
     });
 
     // Handle logout
