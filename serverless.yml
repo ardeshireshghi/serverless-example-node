@@ -6,8 +6,8 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  region: us-west-2
+  runtime: nodejs8.10
+  region: ${opt:region, 'eu-west-1'}
   environment:
     PUBLIC_KEY: ${file(./jwtRS256.key.pub)}
     PRIVATE_KEY: ${file(./jwtRS256.key)}
