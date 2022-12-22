@@ -8,7 +8,7 @@
     "api": "serverless offline"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.1.0"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "http-server": "^0.11.1",
